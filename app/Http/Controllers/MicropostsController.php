@@ -50,6 +50,19 @@ class MicropostsController extends Controller
         return redirect()->back();
     }
     
+        public function favorited($id)
+    {
+        $micropost = Micropost::find($id);
+        $favorited = $micropost->favorited()->paginate(10);
 
+        $data = [
+            'micropost' => $micropost,
+            'microposts' => $favorited,
+        ];
+
+        $data += $this->counts($micropost);
+
+        return view('users.show', $data);    
+    }
 }
 ?>
